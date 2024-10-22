@@ -6,55 +6,57 @@ monsters_defeated = set()
 nights_completed = 0
 
 secret_codes = {
-    "FREDDY": "Вы получили специальный фонарик, который отпугивает всех аниматроников!",
-    "BONNIE": "Вы нашли редкий предмет: музыкальную шкатулку!",
-    "CHICA": "Вы получили дополнительную жизнь!",
+    "FREDDY": "Р’С‹ РїРѕР»СѓС‡РёР»Рё СЃРїРµС†РёР°Р»СЊРЅС‹Р№ С„РѕРЅР°СЂРёРє, РєРѕС‚РѕСЂС‹Р№ РѕС‚РїСѓРіРёРІР°РµС‚ РІСЃРµС… Р°РЅРёРјР°С‚СЂРѕРЅРёРєРѕРІ!",
+    "BONNIE": "Р’С‹ РЅР°С€Р»Рё СЂРµРґРєРёР№ РїСЂРµРґРјРµС‚: РјСѓР·С‹РєР°Р»СЊРЅСѓСЋ С€РєР°С‚СѓР»РєСѓ!",
+    "CHICA": "Р’С‹ РїРѕР»СѓС‡РёР»Рё РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅСѓСЋ Р¶РёР·РЅСЊ!",
 }
 
 nights = {
     1: {
-        "description": "Вы находитесь в охранной комнате Freddy's. Стены покрыты граффити, и слышны странные звуки.",
-        "puzzle": "Проверьте камеры, чтобы найти аниматроников.",
+        "description": "Р’С‹ РЅР°С…РѕРґРёС‚РµСЃСЊ РІ РѕС…СЂР°РЅРЅРѕР№ РєРѕРјРЅР°С‚Рµ Freddy's. РЎС‚РµРЅС‹ РїРѕРєСЂС‹С‚С‹ РіСЂР°С„С„РёС‚Рё, Рё СЃР»С‹С€РЅС‹ СЃС‚СЂР°РЅРЅС‹Рµ Р·РІСѓРєРё.",
+        "puzzle": "РџСЂРѕРІРµСЂСЊС‚Рµ РєР°РјРµСЂС‹, С‡С‚РѕР±С‹ РЅР°Р№С‚Рё Р°РЅРёРјР°С‚СЂРѕРЅРёРєРѕРІ.",
         "monsters": ["Freddy", "Bonnie", "Chica"],
-        "items": ["фонарик", "замок", "записка"]
+        "items": ["С„РѕРЅР°СЂРёРє", "Р·Р°РјРѕРє", "Р·Р°РїРёСЃРєР°"]
     },
     2: {
-        "description": "Вторая ночь. Аниматроники становятся агрессивнее.",
-        "puzzle": "Защитите себя от нападения аниматроников.",
+        "description": "Р’С‚РѕСЂР°СЏ РЅРѕС‡СЊ. РђРЅРёРјР°С‚СЂРѕРЅРёРєРё СЃС‚Р°РЅРѕРІСЏС‚СЃСЏ Р°РіСЂРµСЃСЃРёРІРЅРµРµ.",
+        "puzzle": "Р—Р°С‰РёС‚РёС‚Рµ СЃРµР±СЏ РѕС‚ РЅР°РїР°РґРµРЅРёСЏ Р°РЅРёРјР°С‚СЂРѕРЅРёРєРѕРІ.",
         "monsters": ["Foxy"],
-        "items": ["спрей", "дверь", "запись"]
+        "items": ["СЃРїСЂРµР№", "РґРІРµСЂСЊ", "Р·Р°РїРёСЃСЊ"]
     },
     3: {
-        "description": "Третья ночь. Вы чувствуете, что кто-то наблюдает за вами.",
-        "puzzle": "Разгадайте загадку, чтобы отключить систему безопасности.",
-        "riddle": "Что идет вверх, но никогда не опускается?",
-        "answer": "возраст"
+        "description": "РўСЂРµС‚СЊСЏ РЅРѕС‡СЊ. Р’С‹ С‡СѓРІСЃС‚РІСѓРµС‚Рµ, С‡С‚Рѕ РєС‚Рѕ-С‚Рѕ РЅР°Р±Р»СЋРґР°РµС‚ Р·Р° РІР°РјРё.",
+        "puzzle": "Р Р°Р·РіР°РґР°Р№С‚Рµ Р·Р°РіР°РґРєСѓ, С‡С‚РѕР±С‹ РѕС‚РєР»СЋС‡РёС‚СЊ СЃРёСЃС‚РµРјСѓ Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё.",
+        "riddle": "Р§С‚Рѕ РёРґРµС‚ РІРІРµСЂС…, РЅРѕ РЅРёРєРѕРіРґР° РЅРµ РѕРїСѓСЃРєР°РµС‚СЃСЏ?",
+        "answer": "РІРѕР·СЂР°СЃС‚",
+        "monsters": ["Freddy", "Chica"],
+        "items": ["РєР»СЋС‡", "С„РѕРЅР°СЂРёРє", "РґРёСЃРє"]
     }
 }
 
 
 def display_inventory():
     if inventory:
-        print("Ваш инвентарь:", ", ".join(inventory))
+        print("Р’Р°С€ РёРЅРІРµРЅС‚Р°СЂСЊ:", ", ".join(inventory))
     else:
-        print("Ваш инвентарь пуст.")
+        print("Р’Р°С€ РёРЅРІРµРЅС‚Р°СЂСЊ РїСѓСЃС‚.")
 
 
 def encounter_monster(monster):
-    print(f"Вы столкнулись с {monster}!")
+    print(f"Р’С‹ СЃС‚РѕР»РєРЅСѓР»РёСЃСЊ СЃ {monster}!")
     if monster == "Freddy":
-        print("Freddy нападает на вас!")
-        return True  # Игрок убит
+        print("Freddy РЅР°РїР°РґР°РµС‚ РЅР° РІР°СЃ!")
+        return True  # РРіСЂРѕРє СѓР±РёС‚
     elif monster == "Bonnie" or monster == "Chica":
-        print(f"{monster} пытается вас поймать!")
-        return random.choice([True, False])  # Случайный шанс убить игрока
-    return False  # Игрок выживает
+        print(f"{monster} РїС‹С‚Р°РµС‚СЃСЏ РІР°СЃ РїРѕР№РјР°С‚СЊ!")
+        return random.choice([True, False])  # РЎР»СѓС‡Р°Р№РЅС‹Р№ С€Р°РЅСЃ СѓР±РёС‚СЊ РёРіСЂРѕРєР°
+    return False  # РРіСЂРѕРє РІС‹Р¶РёРІР°РµС‚
 
 
 def check_secret_code(code):
     if code in secret_codes:
         print(secret_codes[code])
-        inventory.append(code)  # Добавляем секретный предмет в инвентарь
+        inventory.append(code)  # Р”РѕР±Р°РІР»СЏРµРј СЃРµРєСЂРµС‚РЅС‹Р№ РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ
         return True
     return False
 
@@ -64,38 +66,37 @@ def night_one():
     print(nights[1]["description"])
 
     while True:
-        action = input("Введите команду (проверить камеры, взять предмет, ввести код): ").lower()
+        action = input("Р’РІРµРґРёС‚Рµ РєРѕРјР°РЅРґСѓ (РїСЂРѕРІРµСЂРёС‚СЊ РєР°РјРµСЂС‹, РІР·СЏС‚СЊ РїСЂРµРґРјРµС‚, РІРІРµСЃС‚Рё РєРѕРґ): ").lower()
 
-        if action == "проверить камеры":
+        if action == "РїСЂРѕРІРµСЂРёС‚СЊ РєР°РјРµСЂС‹":
             monster = random.choice(nights[1]["monsters"])
             if encounter_monster(monster):
-                print("Вы погибли! Игра начинается заново с первой ночи.")
-                return False  # Игрок погиб
+                print("Р’С‹ РїРѕРіРёР±Р»Рё! РРіСЂР° РЅР°С‡РёРЅР°РµС‚СЃСЏ Р·Р°РЅРѕРІРѕ СЃ РїРµСЂРІРѕР№ РЅРѕС‡Рё.")
+                return False  # РРіСЂРѕРє РїРѕРіРёР±
 
-            print(f"Вы увидели {monster} на камере!")
+            print(f"Р’С‹ СѓРІРёРґРµР»Рё {monster} РЅР° РєР°РјРµСЂРµ!")
             if monster == "Freddy":
-                print("Freddy приближается! Используйте фонарик!")
-                if "фонарик" in inventory:
-                    print("Вы ослепили Freddy и он отступил!")
+                print("Freddy РїСЂРёР±Р»РёР¶Р°РµС‚СЃСЏ! РСЃРїРѕР»СЊР·СѓР№С‚Рµ С„РѕРЅР°СЂРёРє!")
+                if "С„РѕРЅР°СЂРёРє" in inventory:
+                    print("Р’С‹ РѕСЃР»РµРїРёР»Рё Freddy Рё РѕРЅ РѕС‚СЃС‚СѓРїРёР»!")
                     monsters_defeated.add(monster)
                     break
                 else:
-                    print("У вас нет фонарика!")
+                    print("РЈ РІР°СЃ РЅРµС‚ С„РѕРЅР°СЂРёРєР°!")
 
-        elif action == "взять предмет":
+        elif action == "РІР·СЏС‚СЊ РїСЂРµРґРјРµС‚":
             item = random.choice(nights[1]["items"])
             inventory.append(item)
-            print(f"Вы взяли {item}.")
-
-        elif action.startswith("ввести код"):
+            print(f"Р’С‹ РІР·СЏР»Рё {item}.")
+        elif action.startswith("РІРІРµСЃС‚Рё РєРѕРґ"):
             code = action.split()[-1].upper()
             if check_secret_code(code):
-                continue  # Код принят
+                continue  # РљРѕРґ РїСЂРёРЅСЏС‚
 
         display_inventory()
 
     nights_completed += 1
-    return True  # Игрок выжил
+    return True  # РРіСЂРѕРє РІС‹Р¶РёР»
 
 
 def night_two():
@@ -103,44 +104,73 @@ def night_two():
     print(nights[2]["description"])
 
     while True:
-        action = input("Введите команду (защититься, взять предмет, ввести код): ").lower()
+        action = input("Р’РІРµРґРёС‚Рµ РєРѕРјР°РЅРґСѓ (Р·Р°С‰РёС‚РёС‚СЊСЃСЏ, РІР·СЏС‚СЊ РїСЂРµРґРјРµС‚, РІРІРµСЃС‚Рё РєРѕРґ): ").lower()
 
-        if action == "защититься":
-            if "спрей" in inventory:
-                print("Вы использовали спрей и отпугнули Foxy!")
+        if action == "Р·Р°С‰РёС‚РёС‚СЊСЃСЏ":
+            if "СЃРїСЂРµР№" in inventory:
+                print("Р’С‹ РёСЃРїРѕР»СЊР·РѕРІР°Р»Рё СЃРїСЂРµР№ Рё РѕС‚РїСѓРіРЅСѓР»Рё Foxy!")
                 monsters_defeated.add("Foxy")
                 break
             else:
-                print("У вас нет спрея для защиты!")
+                print("РЈ РІР°СЃ РЅРµС‚ СЃРїСЂРµСЏ РґР»СЏ Р·Р°С‰РёС‚С‹!")
 
-        elif action == "взять предмет":
+        elif action == "РІР·СЏС‚СЊ РїСЂРµРґРјРµС‚":
             item = random.choice(nights[2]["items"])
             inventory.append(item)
-            print(f"Вы взяли {item}.")
-        elif action.startswith("ввести код"):
+            print(f"Р’С‹ РІР·СЏР»Рё {item}.")
+
+        elif action.startswith("РІРІРµСЃС‚Рё РєРѕРґ"):
             code = action.split()[-1].upper()
             if check_secret_code(code):
-                continue  # Код принят
+                continue  # РљРѕРґ РїСЂРёРЅСЏС‚
+
+        display_inventory()
+nights_completed += 1
+    return True  # РРіСЂРѕРє РІС‹Р¶РёР»
+
+
+def night_three():
+    global nights_completed
+    print(nights[3]["description"])
+
+    while True:
+        action = input("Р’РІРµРґРёС‚Рµ РєРѕРјР°РЅРґСѓ (СЂР°Р·РіР°РґР°С‚СЊ Р·Р°РіР°РґРєСѓ, РІР·СЏС‚СЊ РїСЂРµРґРјРµС‚, РІРІРµСЃС‚Рё РєРѕРґ): ").lower()
+
+        if action == "СЂР°Р·РіР°РґР°С‚СЊ Р·Р°РіР°РґРєСѓ":
+            print(nights[3]["riddle"])
+            answer = input("Р’Р°С€ РѕС‚РІРµС‚: ").lower()
+            if answer == nights[3]["answer"]:
+                print("Р—Р°РіР°РґРєР° СЂР°Р·РіР°РґР°РЅР°, СЃРёСЃС‚РµРјР° Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё РѕС‚РєР»СЋС‡РµРЅР°!")
+                break
+            else:
+                print("РќРµРїСЂР°РІРёР»СЊРЅРѕ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.")
+
+        elif action == "РІР·СЏС‚СЊ РїСЂРµРґРјРµС‚":
+            item = random.choice(nights[3]["items"])
+            inventory.append(item)
+            print(f"Р’С‹ РІР·СЏР»Рё {item}.")
+
+        elif action.startswith("РІРІРµСЃС‚Рё РєРѕРґ"):
+            code = action.split()[-1].upper()
+            if check_secret_code(code):
+                continue  # РљРѕРґ РїСЂРёРЅСЏС‚
 
         display_inventory()
 
+        if random.random() < 0.3:
+            monster = random.choice(nights[3]["monsters"])
+            if encounter_monster(monster):
+                print("Р’С‹ РїРѕРіРёР±Р»Рё! РРіСЂР° РЅР°С‡РёРЅР°РµС‚СЃСЏ Р·Р°РЅРѕРІРѕ СЃ РїРµСЂРІРѕР№ РЅРѕС‡Рё.")
+                return False  # РРіСЂРѕРє РїРѕРіРёР±
+
     nights_completed += 1
-    return True  # Игрок выжил
+    return True  # РРіСЂРѕРє РІС‹Р¶РёР»
 
 
 def start_game():
-    global nights_completed
-    while nights_completed < len(nights):
-        if nights_completed == 0:
-            if not night_one():
-                break
-        elif nights_completed == 1:
-            if not night_two():
-                break
-        else:
-            print("Поздравляем! Вы прошли все ночи!")
-            break
-
-
-# Запуск игры
-start_game()
+    print("Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ РёРіСЂСѓ 'Five Nights at Freddy's'!")
+    
+    if night_one():
+        if night_two():
+            if night_three():
+                print("РџРѕР·РґСЂР°РІР»СЏРµРј! Р’С‹ РїСЂРѕС€Р»Рё РІСЃРµ С‚СЂРё РЅРѕС‡Рё Рё РІС‹Р¶РёР»Рё!")
