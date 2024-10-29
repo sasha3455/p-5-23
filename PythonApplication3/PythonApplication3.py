@@ -44,10 +44,7 @@ def display_inventory():
 
 def encounter_monster(monster):
     print(f"Вы столкнулись с {monster}!")
-    if monster == "Freddy":
-        print("Freddy нападает на вас!")
-        return True  # Игрок убит
-    elif monster == "Bonnie" or monster == "Chica":
+    if monster == "Bonnie" or monster == "Chica":
         print(f"{monster} пытается вас поймать!")
         return random.choice([True, False])  # Случайный шанс убить игрока
     return False  # Игрок выживает
