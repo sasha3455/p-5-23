@@ -125,7 +125,7 @@ def night_two():
                 continue  # Код принят
 
         display_inventory()
-nights_completed += 1
+    nights_completed += 1
     return True  # Игрок выжил
 
 
