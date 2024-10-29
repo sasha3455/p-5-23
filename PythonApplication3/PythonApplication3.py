@@ -174,3 +174,4 @@ def start_game():
         if night_two():
             if night_three():
                 print("Поздравляем! Вы прошли все три ночи и выжили!")
+start_game()
