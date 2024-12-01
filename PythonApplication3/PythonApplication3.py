@@ -1,174 +1,226 @@
 
-import random
-
-inventory = []
-monsters_defeated = set()
-nights_completed = 0
-
-secret_codes = {
-    "FREDDY": "Вы получили специальный фонарик, который отпугивает всех аниматроников!",
-    "BONNIE": "Вы нашли редкий предмет: музыкальную шкатулку!",
-    "CHICA": "Вы получили дополнительную жизнь!",
-}
-
-nights = {
-    1: {
-        "description": "Вы находитесь в охранной комнате Freddy's. Стены покрыты граффити, и слышны странные звуки.",
-        "puzzle": "Проверьте камеры, чтобы найти аниматроников.",
-        "monsters": ["Freddy", "Bonnie", "Chica"],
-        "items": ["фонарик", "замок", "записка"]
+# Структура данных
+users = [
+    {
+        'username': 'john_doe',
+        'password': 'password',
+        'role': 'user',
+        'history': ['Кроссовки Nike', 'Ботинки Timberland'],
+        'created_at': '2024-09-01',
     },
-    2: {
-        "description": "Вторая ночь. Аниматроники становятся агрессивнее.",
-        "puzzle": "Защитите себя от нападения аниматроников.",
-        "monsters": ["Foxy"],
-        "items": ["спрей", "дверь", "запись"]
+    {
+        'username': 'admin_user',
+        'password': 'admin_password',
+        'role': 'admin',
+        'history': [],
+        'created_at': '2024-01-01',
     },
-    3: {
-        "description": "Третья ночь. Вы чувствуете, что кто-то наблюдает за вами.",
-        "puzzle": "Разгадайте загадку, чтобы отключить систему безопасности.",
-        "riddle": "Что идет вверх, но никогда не опускается?",
-        "answer": "возраст",
-        "monsters": ["Freddy", "Chica"],
-        "items": ["ключ", "фонарик", "диск"]
-    }
-}
+]
+
+shoes = [
+    {'id': 1, 'brand': 'Nike', 'model': 'Air Max', 'size': 42, 'price': 10000, 'rating': 4.5},
+    {'id': 2, 'brand': 'Adidas', 'model': 'UltraBoost', 'size': 43, 'price': 12000, 'rating': 4.7},
+    {'id': 3, 'brand': 'Puma', 'model': 'Speed', 'size': 40, 'price': 8000, 'rating': 4.3},
+    {'id': 4, 'brand': 'Timberland', 'model': 'PRO', 'size': 44, 'price': 15000, 'rating': 4.8},
+]
 
 
-def display_inventory():
-    if inventory:
-        print("Ваш инвентарь:", ", ".join(inventory))
+# Функции для пользователей
+def user_menu():
+    print("Добро пожаловать в магазин обуви!")
+    print("Пожалуйста, авторизуйтесь.")
+    username = input("Логин: ")
+    password = input("Пароль: ")
+
+    user = authenticate_user(username, password)
+    if user:
+        while True:
+            print("\nВыберите действие:")
+            print("1. Просмотреть каталог обуви")
+            print("2. Найти обувь по параметрам")
+            print("3. Сортировать обувь по цене")
+            print("4. Просмотреть историю покупок")
+            print("5. Обновить профиль")
+            print("6. Выйти")
+
+            choice = input("Ваш выбор: ")
+
+            if choice == '1':
+                view_shoes()
+            elif choice == '2':
+                search_shoes()
+            elif choice == '3':
+                sort_shoes_by_price()
+            elif choice == '4':
+                view_purchase_history(user)
+            elif choice == '5':
+                update_profile(user)
+            elif choice == '6':
+                break
+            else:
+                print("Неверный выбор! Попробуйте снова.")
     else:
-        print("Ваш инвентарь пуст.")
+        print("Неверный логин или пароль.")
 
 
-def encounter_monster(monster):
-    print(f"Вы столкнулись с {monster}!")
-    if monster == "Bonnie" or monster == "Chica":
-        print(f"{monster} пытается вас поймать!")
-        return random.choice([True, False])  # Случайный шанс убить игрока
-    return False  # Игрок выживает
+def view_shoes():
+    print("Каталог обуви:")
+    for shoe in shoes:
+        print(f"{shoe['brand']} {shoe['model']} - {shoe['size']} - {shoe['price']} - {shoe['rating']}")
 
 
-def check_secret_code(code):
-    if code in secret_codes:
-        print(secret_codes[code])
-        inventory.append(code)  # Добавляем секретный предмет в инвентарь
-        return True
-    return False
+def search_shoes():
+    brand = input("Введите бренд для поиска: ")
+    size = int(input("Введите размер: "))
+    found_shoes = filter(lambda shoe: shoe['brand'] == brand and shoe['size'] == size, shoes)
+    print("Результаты поиска:")
+    for shoe in found_shoes:
+        print(f"{shoe['brand']} {shoe['model']} - {shoe['size']} - {shoe['price']} - {shoe['rating']}")
 
 
-def night_one():
-    global nights_completed
-    print(nights[1]["description"])
-
-    while True:
-        action = input("Введите команду (проверить камеры, взять предмет, ввести код): ").lower()
-
-        if action == "проверить камеры":
-            monster = random.choice(nights[1]["monsters"])
-            if encounter_monster(monster):
-                print("Вы погибли! Игра начинается заново с первой ночи.")
-                return False  # Игрок погиб
-
-            print(f"Вы увидели {monster} на камере!")
-            if monster == "Freddy":
-                print("Freddy приближается! Используйте фонарик!")
-                if "фонарик" in inventory:
-                    print("Вы ослепили Freddy и он отступил!")
-                    monsters_defeated.add(monster)
-                    break
-                else:
-                    print("У вас нет фонарика!")
-
-        elif action == "взять предмет":
-            item = random.choice(nights[1]["items"])
-            inventory.append(item)
-            print(f"Вы взяли {item}.")
-        elif action.startswith("ввести код"):
-            code = action.split()[-1].upper()
-            if check_secret_code(code):
-                continue  # Код принят
-
-        display_inventory()
-
-    nights_completed += 1
-    return True  # Игрок выжил
+def sort_shoes_by_price():
+    sorted_shoes = sorted(shoes, key=lambda shoe: shoe['price'])
+    print("Обувь, отсортированная по цене:")
+    for shoe in sorted_shoes:
+        print(f"{shoe['brand']} {shoe['model']} - {shoe['price']}")
 
 
-def night_two():
-    global nights_completed
-    print(nights[2]["description"])
+def view_purchase_history(user):
+    print("История ваших покупок:")
+    for item in user['history']:
+        print(item)
 
-    while True:
-        action = input("Введите команду (защититься, взять предмет, ввести код): ").lower()
 
-        if action == "защититься":
-            if "спрей" in inventory:
-                print("Вы использовали спрей и отпугнули Foxy!")
-                monsters_defeated.add("Foxy")
+def update_profile(user):
+    new_password = input("Введите новый пароль: ")
+    user['password'] = new_password
+    print("Пароль успешно обновлен!")
+
+
+# Функции для администраторов
+def admin_menu():
+    print("Добро пожаловать в систему управления магазином обуви!")
+    print("Пожалуйста, авторизуйтесь.")
+    username = input("Логин: ")
+    password = input("Пароль: ")
+
+    admin = authenticate_admin(username, password)
+    if admin:
+        while True:
+            print("\nВыберите действие:")
+            print("1. Добавить обувь")
+            print("2. Удалить обувь")
+            print("3. Редактировать данные о товаре")
+            print("4. Управление пользователями")
+            print("5. Просмотр статистики")
+            print("6. Выйти")
+
+            choice = input("Ваш выбор: ")
+
+            if choice == '1':
+                add_shoe()
+            elif choice == '2':
+                delete_shoe()
+            elif choice == '3':
+                edit_shoe()
+            elif choice == '4':
+                manage_users()
+            elif choice == '5':
+                view_statistics()
+            elif choice == '6':
                 break
             else:
-                print("У вас нет спрея для защиты!")
-
-        elif action == "взять предмет":
-            item = random.choice(nights[2]["items"])
-            inventory.append(item)
-            print(f"Вы взяли {item}.")
-
-        elif action.startswith("ввести код"):
-            code = action.split()[-1].upper()
-            if check_secret_code(code):
-                continue  # Код принят
-
-        display_inventory()
-    nights_completed += 1
-    return True  # Игрок выжил
+                print("Неверный выбор! Попробуйте снова.")
+    else:
+        print("Неверный логин или пароль.")
 
 
-def night_three():
-    global nights_completed
-    print(nights[3]["description"])
-
-    while True:
-        action = input("Введите команду (разгадать загадку, взять предмет, ввести код): ").lower()
-
-        if action == "разгадать загадку":
-            print(nights[3]["riddle"])
-            answer = input("Ваш ответ: ").lower()
-            if answer == nights[3]["answer"]:
-                print("Загадка разгадана, система безопасности отключена!")
-                break
-            else:
-                print("Неправильно. Попробуйте еще раз.")
-
-        elif action == "взять предмет":
-            item = random.choice(nights[3]["items"])
-            inventory.append(item)
-            print(f"Вы взяли {item}.")
-
-        elif action.startswith("ввести код"):
-            code = action.split()[-1].upper()
-            if check_secret_code(code):
-                continue  # Код принят
-
-        display_inventory()
-
-        if random.random() < 0.3:
-            monster = random.choice(nights[3]["monsters"])
-            if encounter_monster(monster):
-                print("Вы погибли! Игра начинается заново с первой ночи.")
-                return False  # Игрок погиб
-
-    nights_completed += 1
-    return True  # Игрок выжил
+def add_shoe():
+    brand = input("Введите бренд: ")
+    model = input("Введите модель: ")
+    size = int(input("Введите размер: "))
+    price = int(input("Введите цену: "))
+    rating = float(input("Введите рейтинг: "))
+    new_shoe = {'id': len(shoes) + 1, 'brand': brand, 'model': model, 'size': size, 'price': price, 'rating': rating}
+    shoes.append(new_shoe)
+    print("Обувь успешно добавлена!")
 
 
-def start_game():
-    print("Добро пожаловать в игру 'Five Nights at Freddy's'!")
-    
-    if night_one():
-        if night_two():
-            if night_three():
-                print("Поздравляем! Вы прошли все три ночи и выжили!")
-start_game()
+def delete_shoe():
+    shoe_id = int(input("Введите ID обуви для удаления: "))
+    shoe_to_delete = next((shoe for shoe in shoes if shoe['id'] == shoe_id), None)
+    if shoe_to_delete:
+        shoes.remove(shoe_to_delete)
+        print("Обувь успешно удалена!")
+    else:
+        print("Обувь не найдена.")
+
+
+def edit_shoe():
+    shoe_id = int(input("Введите ID обуви для редактирования: "))
+    shoe_to_edit = next((shoe for shoe in shoes if shoe['id'] == shoe_id), None)
+    if shoe_to_edit:
+        new_price = int(input(f"Введите новую цену для {shoe_to_edit['model']}: "))
+        new_rating = float(input(f"Введите новый рейтинг для {shoe_to_edit['model']}: "))
+        shoe_to_edit['price'] = new_price
+        shoe_to_edit['rating'] = new_rating
+        print("Данные обуви успешно обновлены!")
+    else:
+        print("Обувь не найдена.")
+
+
+def manage_users():
+    print("Управление пользователями:")
+    for user in users:
+        print(f"{user['username']} - {user['role']}")
+    action = input("Вы хотите удалить или изменить пользователя? (д/м): ")
+    if action == 'д':
+        username_to_delete = input("Введите логин пользователя для удаления: ")
+        user_to_delete = next((user for user in users if user['username'] == username_to_delete), None)
+        if user_to_delete:
+            users.remove(user_to_delete)
+            print("Пользователь успешно удален!")
+        else:
+            print("Пользователь не найден.")
+    elif action == 'м':
+        username_to_edit = input("Введите логин пользователя для изменения: ")
+        user_to_edit = next((user for user in users if user['username'] == username_to_edit), None)
+        if user_to_edit:
+            new_role = input("Введите новую роль (user/admin): ")
+            user_to_edit['role'] = new_role
+            print("Роль пользователя успешно обновлена!")
+        else:
+            print("Пользователь не найден.")
+
+
+def view_statistics():
+    print("Статистика по продажам:")
+    print(f"Общее количество товаров: {len(shoes)}")
+    print(f"Средняя цена товара: {sum(shoe['price'] for shoe in shoes) / len(shoes)}")
+
+
+# Функции для аутентификации
+def authenticate_user(username, password):
+    return next((user for user in users if
+                 user['username'] == username and user['password'] == password and user['role'] == 'user'), None)
+
+
+def authenticate_admin(username, password):
+    return next((user for user in users if
+                 user['username'] == username and user['password'] == password and user['role'] == 'admin'), None)
+
+
+# Основной цикл программы
+def main():
+    role = input("Введите роль (user/admin): ").strip().lower()
+
+    if role == 'user':
+        user_menu()
+    elif role == 'admin':
+        admin_menu()
+    else:
+        print("Неверная роль. Попробуйте снова.")
+
+
+if __name__ == "__main__":
+    main()
