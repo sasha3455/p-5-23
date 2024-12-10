@@ -1,6 +1,6 @@
 from functools import reduce
 
-# Данные пользователей
+# Ваши начальные данные
 users = [
     {
         'username': 'john_doe',
@@ -18,7 +18,6 @@ users = [
     },
 ]
 
-# Данные о товарах
 shoes = [
     {'id': 1, 'brand': 'Nike', 'model': 'Air Max', 'size': 42, 'price': 10000, 'rating': 4.5},
     {'id': 2, 'brand': 'Adidas', 'model': 'UltraBoost', 'size': 43, 'price': 12000, 'rating': 4.7},
@@ -26,7 +25,7 @@ shoes = [
     {'id': 4, 'brand': 'Timberland', 'model': 'PRO', 'size': 44, 'price': 15000, 'rating': 4.8},
 ]
 
-# Функции пользователя
+# Функции для пользователей
 def user_menu():
     print("Добро пожаловать в магазин обуви!")
     print("Пожалуйста, авторизуйтесь.")
@@ -62,6 +61,34 @@ def user_menu():
                     print("Неверный выбор! Попробуйте снова.")
         else:
             print("Неверный логин или пароль.")
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+
+def admin_menu():
+    print("Добро пожаловать, администратор!")
+    try:
+        while True:
+            print("\nВыберите действие:")
+            print("1. Добавить товар")
+            print("2. Удалить товар")
+            print("3. Просмотреть статистику")
+            print("4. Управление пользователями")
+            print("5. Выйти")
+
+            choice = input("Ваш выбор: ")
+
+            if choice == '1':
+                add_shoe()
+            elif choice == '2':
+                delete_shoe()
+            elif choice == '3':
+                view_statistics()
+            elif choice == '4':
+                manage_users()
+            elif choice == '5':
+                break
+            else:
+                print("Неверный выбор! Попробуйте снова.")
     except Exception as e:
         print(f"Произошла ошибка: {e}")
 
@@ -118,58 +145,21 @@ def update_profile(user):
     except Exception as e:
         print(f"Ошибка при обновлении профиля: {e}")
 
-# Функции для администратора
-def admin_menu():
-    print("Добро пожаловать в административную панель!")
-    try:
-        username = input("Логин: ")
-        password = input("Пароль: ")
-        admin = authenticate_admin(username, password)
-        if admin:
-            while True:
-                print("\nВыберите действие:")
-                print("1. Добавить товар")
-                print("2. Удалить товар")
-                print("3. Редактировать товар")
-                print("4. Просмотр и анализ статистики")
-                print("5. Управление пользователями")
-                print("6. Выйти")
-
-                choice = input("Ваш выбор: ")
-
-                if choice == '1':
-                    add_shoe()
-                elif choice == '2':
-                    delete_shoe()
-                elif choice == '3':
-                    edit_shoe()
-                elif choice == '4':
-                    view_statistics()
-                elif choice == '5':
-                    manage_users()
-                elif choice == '6':
-                    break
-                else:
-                    print("Неверный выбор! Попробуйте снова.")
-        else:
-            print("Неверный логин или пароль.")
-    except Exception as e:
-        print(f"Произошла ошибка: {e}")
-
+# Функции для администраторов
 def add_shoe():
     try:
         brand = input("Введите бренд: ")
         model = input("Введите модель: ")
         size = int(input("Введите размер: "))
         price = float(input("Введите цену: "))
-        rating = float(input("Введите рейтинг (1-5): "))
+        rating = float(input("Введите рейтинг: "))
         new_shoe = {
             'id': len(shoes) + 1,
             'brand': brand,
             'model': model,
             'size': size,
             'price': price,
-            'rating': rating
+            'rating': rating,
         }
         shoes.append(new_shoe)
         print("Товар успешно добавлен!")
@@ -179,37 +169,10 @@ def add_shoe():
 def delete_shoe():
     try:
         shoe_id = int(input("Введите ID товара для удаления: "))
-        global shoes
-        shoes = [shoe for shoe in shoes if shoe['id'] != shoe_id]
+        shoes[:] = [shoe for shoe in shoes if shoe['id'] != shoe_id]
         print("Товар успешно удален!")
     except Exception as e:
         print(f"Ошибка при удалении товара: {e}")
-
-def edit_shoe():
-    try:
-        shoe_id = int(input("Введите ID товара для редактирования: "))
-        shoe = next((shoe for shoe in shoes if shoe['id'] == shoe_id), None)
-        if shoe:
-            shoe['brand'] = input(f"Введите бренд ({shoe['brand']}): ") or shoe['brand']
-            shoe['model'] = input(f"Введите модель ({shoe['model']}): ") or shoe['model']
-            shoe['size'] = int(input(f"Введите размер ({shoe['size']}): ") or shoe['size'])
-            shoe['price'] = float(input(f"Введите цену ({shoe['price']}): ") or shoe['price'])
-            shoe['rating'] = float(input(f"Введите рейтинг ({shoe['rating']}): ") or shoe['rating'])
-            print("Товар успешно обновлен!")
-        else:
-            print("Товар с таким ID не найден.")
-    except Exception as e:
-        print(f"Ошибка при редактировании товара: {e}")
-
-def view_statistics():
-    try:
-        total_sales = reduce(lambda total, user: total + len(user['history']), users, 0)
-        avg_price = reduce(lambda total, shoe: total + shoe['price'], shoes, 0) / len(shoes)
-        print(f"Общая статистика:")
-        print(f"Количество проданных товаров: {total_sales}")
-        print(f"Средняя стоимость товаров: {avg_price:.2f}")
-    except Exception as e:
-        print(f"Ошибка при просмотре статистики: {e}")
 
 def manage_users():
     try:
@@ -234,8 +197,7 @@ def manage_users():
             print("Пользователь успешно добавлен!")
         elif choice == '2':
             username = input("Введите имя пользователя для удаления: ")
-            global users
-            users = [user for user in users if user['username'] != username]
+            users[:] = [user for user in users if user['username'] != username]
             print("Пользователь успешно удален!")
         elif choice == '3':
             username = input("Введите имя пользователя для редактирования: ")
@@ -251,19 +213,17 @@ def manage_users():
     except Exception as e:
         print(f"Ошибка при управлении пользователями: {e}")
 
-# Функции аутентификации
+# Функции для аутентификации
 def authenticate_user(username, password):
     try:
-        return next((user for user in users if
-                     user['username'] == username and user['password'] == password and user['role'] == 'user'), None)
+        return next((user for user in users if user['username'] == username and user['password'] == password and user['role'] == 'user'), None)
     except Exception as e:
         print(f"Ошибка аутентификации: {e}")
         return None
 
 def authenticate_admin(username, password):
     try:
-        return next((user for user in users if
-                     user['username'] == username and user['password'] == password and user['role'] == 'admin'), None)
+        return next((user for user in users if user['username'] == username and user['password'] == password and user['role'] == 'admin'), None)
     except Exception as e:
         print(f"Ошибка аутентификации: {e}")
         return None
